@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Classnames from 'classnames';
 import { PrizeoutOffer, PrizeoutOfferSettings } from '../../../../../slices/offers-slice';
 import { OfferGiftCard } from '../offer-gift-card/offer-gift-card';
+import { useDispatch } from 'react-redux';
+import { setCheckoutOffer } from '../../../../../slices/checkout-slice';
 
 import './vertical-offers.less';
+import { AppDispatch } from '../../../../../store';
 
 interface OfferView {
     offers: PrizeoutOffer[];
@@ -15,9 +18,11 @@ const VerticalOffers: React.FC<OfferView> = ({ offers, viewSettings }): React.Re
     const subtitle = viewSettings.subtitle || null;
     const classes: string = Classnames('vertical-offers', { '--has-subtitle': subtitle });
 
-    const [activeOfferId, setActiveOfferId] = useState('');
+    const dispatch = useDispatch<AppDispatch>();
+
     const offerClickHandler = (offer: PrizeoutOffer) => {
-        setActiveOfferId(offer.giftcard_list[0].checkout_value_id);
+        dispatch(setCheckoutOffer(offer));
+        //do something here to show the card in the side bar
     };
 
     const returnOffers = () => {
@@ -26,7 +31,6 @@ const VerticalOffers: React.FC<OfferView> = ({ offers, viewSettings }): React.Re
                 key={`${heading}-${offer.name}`}
                 offer={offer}
                 onClickHandler={() => offerClickHandler(offer)}
-                activeOfferId={activeOfferId}
             />
         ));
     };
