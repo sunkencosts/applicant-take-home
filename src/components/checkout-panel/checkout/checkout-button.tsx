@@ -8,7 +8,7 @@ import * as giftcardService from '../../../utils/services/giftcardService';
 import './checkout-button.less';
 
 const CheckoutButton: React.FC = (): React.ReactElement => {
-    const [buttonText, setButtonText] = useState('Prizeout Gift Card');
+    const [buttonText, setButtonText] = useState('Purchase Prizeout Gift Card');
     const [message, setMessage] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     const [type, setType] = useState('success');
@@ -16,8 +16,7 @@ const CheckoutButton: React.FC = (): React.ReactElement => {
     const selectedOffer = useAppSelector(selectCheckoutOffer);
 
     const buttonHandler = async () => {
-        console.log(selectedOffer);
-        if (selectedOffer) {
+        if (selectedOfferOption) {
             setShowAlert(false);
             setButtonText('...Purchasing Prizeout Giftcard');
             const [messageResponse, typeResponse] = await giftcardService.purchaseGiftcard(
@@ -40,6 +39,7 @@ const CheckoutButton: React.FC = (): React.ReactElement => {
                 size="medium"
                 text={buttonText}
                 type="submit"
+                isDisabled={!selectedOfferOption}
             />
             {showAlert && <Alert message={message} type={type === 'success' ? 'success' : 'error'} />}
         </>

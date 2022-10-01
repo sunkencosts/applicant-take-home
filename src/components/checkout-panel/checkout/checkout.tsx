@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../../hooks';
-import { selectCheckoutOffer, setCheckoutOfferOption } from '../../../slices/checkout-slice';
+import { selectCheckoutOffer, selectCheckoutOfferOption, setCheckoutOfferOption } from '../../../slices/checkout-slice';
 import { PrizeoutOfferValueOptions } from '../../../slices/offers-slice';
 import { AppDispatch } from '../../../store';
 
@@ -14,6 +14,7 @@ import './checkout.less';
 
 const CheckoutPanelView: React.FC = (): React.ReactElement => {
     const checkoutOffer = useAppSelector(selectCheckoutOffer);
+    const checkoutOfferOption = useAppSelector(selectCheckoutOfferOption);
     const dispatch = useDispatch<AppDispatch>();
 
     const onOptionChange = (option: PrizeoutOfferValueOptions) => {
@@ -58,6 +59,7 @@ const CheckoutPanelView: React.FC = (): React.ReactElement => {
                                         key={index}
                                         name="value-option"
                                         value={option.checkout_value_id}
+                                        checked={option.checkout_value_id === checkoutOfferOption?.checkout_value_id}
                                         onChange={() => onOptionChange(option)}
                                     />
                                     Cost: {cost}, value:{value} <br />

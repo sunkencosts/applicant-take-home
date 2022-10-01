@@ -3,7 +3,6 @@
 import { PrizeoutOfferValueOptions } from '../../slices/offers-slice';
 
 export const purchaseGiftcard = (option: PrizeoutOfferValueOptions, name: string) => {
-    console.log('sending http request to purchase:', option);
     // const requestOptions = {
     //     body: JSON.stringify({
     //         checkout_value_id: option.checkout_value_id,
