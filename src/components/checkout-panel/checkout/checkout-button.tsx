@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '../../common';
 
 import './checkout-button.less';
 
 const CheckoutButton: React.FC = (): React.ReactElement => {
     const buttonText = 'Prizeout Gift Card';
-    const buttonHandler = () => {};
+    const buttonHandler = () => {
+        console.log('button clicked');
+    };
 
     return (
         <>

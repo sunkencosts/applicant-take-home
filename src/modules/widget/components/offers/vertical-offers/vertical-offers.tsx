@@ -15,7 +15,9 @@ const VerticalOffers: React.FC<OfferView> = ({ offers, viewSettings }): React.Re
     const subtitle = viewSettings.subtitle || null;
     const classes: string = Classnames('vertical-offers', { '--has-subtitle': subtitle });
 
-    const offerClickHandler = (offer: PrizeoutOffer) => {};
+    const offerClickHandler = (offer: PrizeoutOffer) => {
+        console.log('offer clicked', offer);
+    };
 
     const returnOffers = () => {
         return offers.map((offer) => (
