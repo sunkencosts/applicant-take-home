@@ -8,6 +8,7 @@ export interface CheckoutSlice {
     view: ViewEnum;
     offer: PrizeoutOffer;
     option: PrizeoutOfferValueOptions;
+    showAlert: boolean;
 }
 
 export type ViewEnum = 'checkout' | 'checkout-confirmation';
@@ -17,6 +18,7 @@ export const checkoutInitialState: CheckoutSlice = {
     loading: false,
     offer: null,
     option: null,
+    showAlert: false,
     view: 'checkout',
 };
 
@@ -37,6 +39,9 @@ export const checkoutSlice = createSlice({
         setCheckoutView(state, action: PayloadAction<ViewEnum>) {
             state.view = action.payload;
         },
+        setShowAlert(state, action: PayloadAction<boolean>) {
+            state.showAlert = action.payload;
+        },
         toggleIsLoading(state) {
             state.loading = !state.loading;
         },
@@ -47,8 +52,14 @@ export const checkoutSlice = createSlice({
     },
 });
 
-export const { setCheckoutOffer, setCheckoutOfferOption, setCheckoutView, toggleIsLoading, toggleIsSide } =
-    checkoutSlice.actions;
+export const {
+    setCheckoutOffer,
+    setCheckoutOfferOption,
+    setCheckoutView,
+    toggleIsLoading,
+    toggleIsSide,
+    setShowAlert,
+} = checkoutSlice.actions;
 
 export const selectLoading = ({ checkout: { loading } }: RootState): boolean => loading;
 
@@ -56,6 +67,9 @@ export const selectCheckoutView = ({ checkout: { view } }: RootState): ViewEnum 
 
 export const selectCheckoutIsSide = ({ checkout }: RootState): boolean => {
     return checkout.isSide;
+};
+export const selectShowAlert = ({ checkout }: RootState): boolean => {
+    return checkout.showAlert;
 };
 
 export const selectCheckoutOffer = ({ checkout }: RootState): PrizeoutOffer => {

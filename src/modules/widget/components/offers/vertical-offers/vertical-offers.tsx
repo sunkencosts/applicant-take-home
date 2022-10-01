@@ -3,7 +3,7 @@ import Classnames from 'classnames';
 import { PrizeoutOffer, PrizeoutOfferSettings } from '../../../../../slices/offers-slice';
 import { OfferGiftCard } from '../offer-gift-card/offer-gift-card';
 import { useDispatch } from 'react-redux';
-import { setCheckoutOffer } from '../../../../../slices/checkout-slice';
+import { setCheckoutOffer, setShowAlert } from '../../../../../slices/checkout-slice';
 
 import './vertical-offers.less';
 import { AppDispatch } from '../../../../../store';
@@ -22,6 +22,7 @@ const VerticalOffers: React.FC<OfferView> = ({ offers, viewSettings }): React.Re
 
     const offerClickHandler = (offer: PrizeoutOffer) => {
         dispatch(setCheckoutOffer(offer));
+        dispatch(setShowAlert(false));
         //do something here to show the card in the side bar
     };
 
