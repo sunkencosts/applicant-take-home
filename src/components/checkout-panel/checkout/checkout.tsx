@@ -10,6 +10,7 @@ import './checkout.less';
 
 const CheckoutPanelView: React.FC = (): React.ReactElement => {
     const checkoutOffer = useAppSelector(selectCheckoutOffer);
+
     return (
         <section className="checkout">
             <div className="grid grid--top-bottom grid--stretch-top">
@@ -23,11 +24,22 @@ const CheckoutPanelView: React.FC = (): React.ReactElement => {
                             className="offer"
                         />
                     )}
+
                     {checkoutOffer?.giftcard_list.map((option, index) => {
+                        const cost = (option.cost_in_cents / 100).toLocaleString('en-US', {
+                            currency: 'USD',
+                            style: 'currency',
+                        });
+                        const value = (option.value_in_cents / 100).toLocaleString('en-US', {
+                            currency: 'USD',
+                            style: 'currency',
+                        });
+
                         return (
-                            <li key={index}>
-                                Value:{option.value_in_cents} Cost:{option.cost_in_cents}
-                            </li>
+                            <label key={index}>
+                                <input type="radio" key={index} name="value-option" value={option.checkout_value_id} />
+                                Cost: {cost}, value:{value} <br />
+                            </label>
                         );
                     })}
                 </div>
