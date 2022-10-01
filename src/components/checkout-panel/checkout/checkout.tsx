@@ -15,7 +15,7 @@ const CheckoutPanelView: React.FC = (): React.ReactElement => {
         <section className="checkout">
             <div className="grid grid--top-bottom grid--stretch-top">
                 <div className="grid__item no-scrollbars">
-                    <section className="checkout__brand">Display Gift Card Here</section>
+                    <section className="checkout__brand">Selected Gift Card</section>
                     {checkoutOffer && (
                         <GiftCard
                             name={checkoutOffer.name}
@@ -24,24 +24,35 @@ const CheckoutPanelView: React.FC = (): React.ReactElement => {
                             className="offer"
                         />
                     )}
+                    {checkoutOffer && (
+                        <div className="checkout_selection_label">
+                            <p>Select the value you would like to purchase</p>
+                        </div>
+                    )}
+                    <div className="checkout_options">
+                        {checkoutOffer?.giftcard_list.map((option, index) => {
+                            const cost = (option.cost_in_cents / 100).toLocaleString('en-US', {
+                                currency: 'USD',
+                                style: 'currency',
+                            });
+                            const value = (option.value_in_cents / 100).toLocaleString('en-US', {
+                                currency: 'USD',
+                                style: 'currency',
+                            });
 
-                    {checkoutOffer?.giftcard_list.map((option, index) => {
-                        const cost = (option.cost_in_cents / 100).toLocaleString('en-US', {
-                            currency: 'USD',
-                            style: 'currency',
-                        });
-                        const value = (option.value_in_cents / 100).toLocaleString('en-US', {
-                            currency: 'USD',
-                            style: 'currency',
-                        });
-
-                        return (
-                            <label key={index}>
-                                <input type="radio" key={index} name="value-option" value={option.checkout_value_id} />
-                                Cost: {cost}, value:{value} <br />
-                            </label>
-                        );
-                    })}
+                            return (
+                                <label key={index}>
+                                    <input
+                                        type="radio"
+                                        key={index}
+                                        name="value-option"
+                                        value={option.checkout_value_id}
+                                    />
+                                    Cost: {cost}, value:{value} <br />
+                                </label>
+                            );
+                        })}
+                    </div>
                 </div>
                 <div className="grid__item">
                     <section className="checkout__calculation">
