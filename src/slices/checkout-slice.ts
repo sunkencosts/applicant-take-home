@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { PrizeoutOffer } from './offers-slice';
+import { PrizeoutOffer, PrizeoutOfferValueOptions } from './offers-slice';
 
 export interface CheckoutSlice {
     isSide: boolean;
     loading: boolean;
     view: ViewEnum;
     offer: PrizeoutOffer;
+    option: PrizeoutOfferValueOptions;
 }
 
 export type ViewEnum = 'checkout' | 'checkout-confirmation';
@@ -15,6 +16,7 @@ export const checkoutInitialState: CheckoutSlice = {
     isSide: true,
     loading: false,
     offer: null,
+    option: null,
     view: 'checkout',
 };
 
@@ -26,7 +28,11 @@ export const checkoutSlice = createSlice({
             const currentOffer = state.offer?.giftcard_list[0]?.checkout_value_id;
             const newOffer = action.payload.giftcard_list[0].checkout_value_id;
             //allow the offer to be unselected
+            state.option = null;
             state.offer = currentOffer == newOffer ? null : action.payload;
+        },
+        setCheckoutOfferOption(state, action: PayloadAction<PrizeoutOfferValueOptions>) {
+            state.option = action.payload;
         },
         setCheckoutView(state, action: PayloadAction<ViewEnum>) {
             state.view = action.payload;
@@ -41,7 +47,8 @@ export const checkoutSlice = createSlice({
     },
 });
 
-export const { setCheckoutOffer, setCheckoutView, toggleIsLoading, toggleIsSide } = checkoutSlice.actions;
+export const { setCheckoutOffer, setCheckoutOfferOption, setCheckoutView, toggleIsLoading, toggleIsSide } =
+    checkoutSlice.actions;
 
 export const selectLoading = ({ checkout: { loading } }: RootState): boolean => loading;
 
@@ -53,6 +60,9 @@ export const selectCheckoutIsSide = ({ checkout }: RootState): boolean => {
 
 export const selectCheckoutOffer = ({ checkout }: RootState): PrizeoutOffer => {
     return checkout.offer;
+};
+export const selectCheckoutOfferOption = ({ checkout }: RootState): PrizeoutOfferValueOptions => {
+    return checkout.option;
 };
 
 export default checkoutSlice.reducer;
